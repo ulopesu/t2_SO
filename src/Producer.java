@@ -33,6 +33,4 @@ class Producer implements Runnable {
             }
         }
     }
-
-
 }

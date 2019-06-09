@@ -43,7 +43,6 @@ public class Buffer {
                 return msg;
             }
         }
-
         wait(); //BLOQUEAR Consumer
         return this.retirar();
     }
