@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import javax.print.DocFlavor.STRING;
+
 
 public class Buffer {
     private static ArrayList <Queue<Message>> messageQueue= new ArrayList<>();
@@ -20,24 +22,29 @@ public class Buffer {
         return messageQueue;
     }
 
-    void inserir (Message message){
+    synchronized void inserir (Message message) throws InterruptedException {
         int priority = message.getPriority();
         if (messageQueue.get(priority).size()<3) {
             messageQueue.get(priority).add(message);
+            System.out.println("\n"+message.getContent()+message.getPriority()+" foi inserida no BUFFER!   ");
+            notifyAll();
         } else {
-            //BLOQUEAR Producer
+            wait(); //BLOQUEAR Producer
             this.inserir(message);
         }
     }
 
-    Message retirar () {
+    synchronized Message retirar () throws InterruptedException {
         for (Queue<Message> queue : messageQueue) {
             if(!queue.isEmpty()){
-                return queue.remove();
+                Message msg = queue.remove();
+                System.out.println("\n"+msg.getContent()+msg.getPriority()+" foi removida do BUFFER!   ");
+                notifyAll();
+                return msg;
             }
         }
 
-        //BLOQUEAR Consumer
+        wait(); //BLOQUEAR Consumer
         return this.retirar();
     }
     

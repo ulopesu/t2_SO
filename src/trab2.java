@@ -9,14 +9,12 @@ class trab2 {
         ArrayList<Thread> producers = new ArrayList<>();
         ArrayList<Thread> consumers = new ArrayList<>();
 
-        this.createProducers(producers);
-        this.createConsumers(consumers);
+        createConsumers(consumers, buffer);
+        createProducers(producers, buffer);
+        startConsumers(consumers);
+        startProducers(producers);
 
-        this.startProducers(producers);
-        this.startConsumers(consumers);
         
-
-
         /* 
         buffer.inserir(new Message(3, "HEHEEH"));
         System.out.println(buffer.getMessages());
@@ -24,24 +22,26 @@ class trab2 {
         System.out.println(buffer.getMessages());
         */
     }
-    private void createConsumers(ArrayList<Thread> consumers, Buffer buffer) {
+    
+    
+    private static void createConsumers(ArrayList<Thread> consumers, Buffer buffer) {
         for(int i=0; i<9; i++){
             consumers.add(i, new Thread(new Consumer(buffer)));
         }
 
     }
-    private void createProducers(ArrayList<Thread> producers, Buffer buffer) {
-        for(int i=0; i<9; i++){
-            producers.add(i, new Thread(new Producer(buffer)));
-        }
-    }
-
-    private void startConsumers(ArrayList<Thread> consumers){
+    private static void startConsumers(ArrayList<Thread> consumers){
         for(int i=0; i<9; i++){
             consumers.get(i).start();
         }
     }
-    private void startProducers(ArrayList<Thread> producers){
+
+    public static void createProducers(ArrayList<Thread> producers, Buffer buffer) {
+        for(int i=0; i<9; i++){
+            producers.add(i, new Thread(new Producer(buffer)));
+        }
+    }
+    public static void startProducers(ArrayList<Thread> producers){
         for(int i=0; i<9; i++){
             producers.get(i).start();
         }
