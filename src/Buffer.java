@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import javax.print.DocFlavor.STRING;
-
 
 public class Buffer {
     private static ArrayList <Queue<Message>> messageQueue= new ArrayList<>();
@@ -26,7 +24,7 @@ public class Buffer {
         int priority = message.getPriority();
         if (messageQueue.get(priority).size()<3) {
             messageQueue.get(priority).add(message);
-            System.out.println("\n"+message.getContent()+" Prioridade: "+message.getPriority()+". Foi INSERIDA do Buffer, por "+Thread.currentThread().getName()+".");
+            System.out.println("\n"+message.getContent()+" Prioridade: "+message.getPriority()+". Foi INSERIDA do Buffer, pela "+Thread.currentThread().getName()+".");
             notifyAll();
         } else {
             wait(); //BLOQUEAR Producer
@@ -38,7 +36,7 @@ public class Buffer {
         for (Queue<Message> queue : messageQueue) {
             if(!queue.isEmpty()){
                 Message msg = queue.remove();
-                System.out.println("\n"+msg.getContent()+" Prioridade: "+msg.getPriority()+". Foi REMOVIDA do Buffer, por "+Thread.currentThread().getName()+".");
+                System.out.println("\n"+msg.getContent()+" Prioridade: "+msg.getPriority()+". Foi REMOVIDA do Buffer, pela "+Thread.currentThread().getName()+".");
                 notifyAll();
                 return msg;
             }

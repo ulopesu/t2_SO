@@ -12,19 +12,9 @@ class Producer implements Runnable {
 
     public void run() {
         while(true){
-            int min = 0;
-            int max = 4;
-            int priority = (int) (Math.random() * (max - min)) + min;
-            String content = "Messsage: " + (nMessages++) + ".";
-            Message msg = new Message(priority, content);
-            try {
-                buffer.inserir(msg);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            
-            min = 1000;
-            max = 5000;
+            criticalRegion();
+            int min = 1000;
+            int max = 5000;
             int timeSleep = (int) ((Math.random() * (max - min)) + min);
             try {
                 Thread.sleep(timeSleep);
@@ -33,4 +23,18 @@ class Producer implements Runnable {
             }
         }
     }
+
+    private synchronized static void criticalRegion(){
+        int min = 0;
+        int max = 4;
+        int priority = (int) (Math.random() * (max - min)) + min;
+        String content = "Messsage: " + (nMessages++) + ".";
+        Message msg = new Message(priority, content);
+        try {
+            buffer.inserir(msg);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
