@@ -11,15 +11,24 @@ class Producer implements Runnable {
     }
 
     public void run() {
-        int min = 0, max = 4;
         while(true){
+            int min = 0;
+            int max = 4;
             int priority = (int) (Math.random() * (max - min)) + min;
             String content = "Messsage: " + (nMessages++) + ".";
             Message msg = new Message(priority, content);
             try {
                 buffer.inserir(msg);
             } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            
+            min = 1000;
+            max = 5000;
+            int timeSleep = (int) ((Math.random() * (max - min)) + min);
+            try {
+                Thread.sleep(timeSleep);
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }

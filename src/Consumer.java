@@ -10,11 +10,17 @@ class Consumer implements Runnable {
     }
 
     public void run() {
-        while(true){
+        while (true) {
             try {
                 buffer.retirar();
             } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            int min = 1000, max = 5000;
+            int timeSleep = (int) ((Math.random() * (max - min)) + min);
+            try {
+                Thread.sleep(timeSleep);
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
