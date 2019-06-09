@@ -13,22 +13,12 @@ class trab2 {
         createProducers(producers, buffer);
         startConsumers(consumers);
         startProducers(producers);
-
-        
-        /* 
-        buffer.inserir(new Message(3, "HEHEEH"));
-        System.out.println(buffer.getMessages());
-        buffer.retirar();
-        System.out.println(buffer.getMessages());
-        */
     }
-    
     
     private static void createConsumers(ArrayList<Thread> consumers, Buffer buffer) {
         for(int i=0; i<9; i++){
             consumers.add(i, new Thread(new Consumer(buffer)));
         }
-
     }
     private static void startConsumers(ArrayList<Thread> consumers){
         for(int i=0; i<9; i++){

@@ -44,5 +44,4 @@ public class Buffer {
         wait(); //BLOQUEAR Consumer
         return this.retirar();
     }
-    
 }

@@ -36,5 +36,4 @@ class Producer implements Runnable {
             e.printStackTrace();
         }
     }
-
 }
