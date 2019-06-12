@@ -24,13 +24,14 @@ public class Buffer {
         int priority = message.getPriority();
         if (messageQueue.get(priority).size()<3) {
             messageQueue.get(priority).add(message);
-            System.out.println("\n"+message.getContent()+" Prioridade: "+message.getPriority()+". Foi INSERIDA do Buffer, pela "+Thread.currentThread().getName()+".");
+            System.out.println("\n"+message.getContent()+" Prioridade: "+message.getPriority()+". Foi INSERIDA no Buffer, pela "+Thread.currentThread().getName()+".");
             notifyAll();
         } else {
+            System.out.println("\n"+message.getContent()+" Prioridade: "+message.getPriority()+". "+Thread.currentThread().getName()+": DORMINDO!!!.");
             wait(); //BLOQUEAR Producer
             this.inserir(message);
         }
-    }
+    }        
 
     synchronized Message retirar () throws InterruptedException {
         for (Queue<Message> queue : messageQueue) {
