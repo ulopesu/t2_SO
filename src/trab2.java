@@ -16,12 +16,12 @@ class trab2 {
     }
     
     private static void createConsumers(ArrayList<Thread> consumers, Buffer buffer) {
-        for(int i=0; i<9; i++){
+        for(int i=0; i<1; i++){
             consumers.add(i, new Thread(new Consumer(buffer)));
         }
     }
     private static void startConsumers(ArrayList<Thread> consumers){
-        for(int i=0; i<9; i++){
+        for(int i=0; i<1; i++){
             consumers.get(i).start();
         }
     }
