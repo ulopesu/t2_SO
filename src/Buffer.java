@@ -8,10 +8,6 @@ import java.util.Queue;
 
 public class Buffer {
     private static ArrayList <Queue<Message>> messageQueue= new ArrayList<>();
-    private static int globalOrd=0;
-    private static int currentOrd=0;
-    private int myOrd;
-    
 
     public Buffer () {
         messageQueue.add(new LinkedList<>());
@@ -24,21 +20,11 @@ public class Buffer {
         return messageQueue;
     }
 
-    private synchronized void setMyOrd(){
-        this.myOrd = globalOrd++;
-    }
-
-    private synchronized void setCurrentOrd(){
-        currentOrd++;
-    }
-
     public synchronized void inserir (Message message) throws InterruptedException {
-        setMyOrd();
         int priority = message.getPriority();
-        if (messageQueue.get(priority).size()<3 && (this.myOrd == currentOrd)) {
+        if (messageQueue.get(priority).size()<3) {
             messageQueue.get(priority).add(message);
             System.out.println("\n"+message.getContent()+" Prioridade: "+message.getPriority()+". Foi INSERIDA no Buffer, pela "+Thread.currentThread().getName()+".");
-            setCurrentOrd();
             notifyAll();
         } else {
             System.out.println("\n"+message.getContent()+" Prioridade: "+message.getPriority()+". "+Thread.currentThread().getName()+": DORMINDO!!!.");
@@ -58,5 +44,13 @@ public class Buffer {
         }
         wait(); //BLOQUEAR Consumer
         return this.retirar();
+    }
+
+    public synchronized boolean isFull(Message msg){
+        if(messageQueue.get(msg.getPriority()).size()>=3){
+            return true;
+        } else {
+            return false;
+        }
     }
 }
