@@ -42,33 +42,18 @@ class Producer implements Runnable {
         int priority = msg.getPriority();
         switch (priority) {
             case 0:
-                inserir0(msg);
+                buffer.inserir0(msg);
                 break;
             case 1:
-                inserir1(msg);
+                buffer.inserir1(msg);
                 break;
             case 2:
-                inserir2(msg);
+                buffer.inserir2(msg);
                 break;
             case 3:
-                inserir3(msg);
+                buffer.inserir3(msg);
                 break;
         }
     }
 
-    private static synchronized void inserir0(Message msg) throws InterruptedException {
-        buffer.inserir(msg);
-    }
-
-    private static synchronized void inserir1(Message msg) throws InterruptedException {
-        buffer.inserir(msg);
-    }
-
-    private static synchronized void inserir2(Message msg) throws InterruptedException {
-        buffer.inserir(msg);
-    }
-
-    private static synchronized void inserir3(Message msg) throws InterruptedException {
-        buffer.inserir(msg);
-    }
 }
