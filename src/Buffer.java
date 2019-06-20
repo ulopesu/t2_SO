@@ -9,6 +9,7 @@ import java.util.Queue;
 public class Buffer {
     private static ArrayList <Queue<Message>> messageQueue= new ArrayList<>();
 
+    // CONSTRUTOR DA CLASSE BUFFER.
     public Buffer () {
         messageQueue.add(new LinkedList<>());
         messageQueue.add(new LinkedList<>());
@@ -16,66 +17,27 @@ public class Buffer {
         messageQueue.add(new LinkedList<>());
     }
 
+    // RETORNA O BUFFER MENSAGENS.
     public ArrayList <Queue<Message>> getMessages () {
         return messageQueue;
     }
 
-    public synchronized void inserir0 (Message message) throws InterruptedException {
-        int priority = 0;
+    // INSERE MENSAGEM NO BUFFER.
+    public synchronized void inserir (Message msg) throws InterruptedException {
+        int priority = msg.getPriority();
         if (messageQueue.get(priority).size()<3) {
-            messageQueue.get(priority).add(message);
-            //System.out.println("\n"+message.getContent()+" Prioridade: "+message.getPriority()+". Foi INSERIDA no Buffer, pela "+Thread.currentThread().getName()+".");
+            messageQueue.get(priority).add(msg);
+            System.out.println("\n"+msg.getContent()+" Prioridade: "+msg.getPriority()+". Foi INSERIDA no Buffer, pela "+Thread.currentThread().getName()+".");
             notifyAll();
         } else {
             System.out.println("\nBloqueando Producer: "+Thread.currentThread().getName()+".");
             wait(); //BLOQUEAR Producer
             System.out.println("\nDesbloqueando Producer: "+Thread.currentThread().getName()+".");
-            this.inserir0(message);
+            this.inserir(msg);
         }
-    }     
+    }
 
-    public synchronized void inserir1 (Message message) throws InterruptedException {
-        int priority = 1;
-        if (messageQueue.get(priority).size()<3) {
-            messageQueue.get(priority).add(message);
-            //System.out.println("\n"+message.getContent()+" Prioridade: "+message.getPriority()+". Foi INSERIDA no Buffer, pela "+Thread.currentThread().getName()+".");
-            notifyAll();
-        } else {
-            System.out.println("\nBloqueando Producer: "+Thread.currentThread().getName()+".");
-            wait(); //BLOQUEAR Producer
-            System.out.println("\nDesbloqueando Producer: "+Thread.currentThread().getName()+".");
-            this.inserir1(message);
-        }
-    }     
-
-    public synchronized void inserir2 (Message message) throws InterruptedException {
-        int priority = 2;
-        if (messageQueue.get(priority).size()<3) {
-            messageQueue.get(priority).add(message);
-            //System.out.println("\n"+message.getContent()+" Prioridade: "+message.getPriority()+". Foi INSERIDA no Buffer, pela "+Thread.currentThread().getName()+".");
-            notifyAll();
-        } else {
-            System.out.println("\nBloqueando Producer: "+Thread.currentThread().getName()+".");
-            wait(); //BLOQUEAR Producer
-            System.out.println("\nDesbloqueando Producer: "+Thread.currentThread().getName()+".");
-            this.inserir2(message);
-        }
-    }     
-
-    public synchronized void inserir3 (Message message) throws InterruptedException {
-        int priority = 3;
-        if (messageQueue.get(priority).size()<3) {
-            messageQueue.get(priority).add(message);
-            //System.out.println("\n"+message.getContent()+" Prioridade: "+message.getPriority()+". Foi INSERIDA no Buffer, pela "+Thread.currentThread().getName()+".");
-            notifyAll();
-        } else {
-            System.out.println("\nBloqueando Producer: "+Thread.currentThread().getName()+".");
-            wait(); //BLOQUEAR Producer
-            System.out.println("\nDesbloqueando Producer: "+Thread.currentThread().getName()+".");
-            this.inserir3(message);
-        }
-    }     
-
+    // RETIRA MENSAGEM DO BUFFER.
     public synchronized Message retirar () throws InterruptedException {
         for (Queue<Message> queue : messageQueue) {
             if(!queue.isEmpty()){
