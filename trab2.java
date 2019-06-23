@@ -1,7 +1,4 @@
-package src;
 import java.util.ArrayList;
-
-import src.Buffer;
 
 class trab2 {
     public static void main(String args[]) {

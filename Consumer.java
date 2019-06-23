@@ -1,8 +1,4 @@
-package src;
-
-import src.Buffer;
-
-class Consumer implements Runnable {
+public class Consumer implements Runnable {
     static Buffer buffer;
 
     // CONSTRUTOR DA CLASSE CONSUMER.

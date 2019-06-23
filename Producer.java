@@ -1,8 +1,4 @@
-package src;
-
-import src.Buffer;
-
-class Producer implements Runnable {
+public class Producer implements Runnable {
     static Buffer buffer;
     static int nMessages;
 
@@ -42,5 +38,4 @@ class Producer implements Runnable {
         //System.out.println("\n"+msg.getContent()+" Prioridade: "+msg.getPriority()+". Foi PRODUZIDA, pela "+Thread.currentThread().getName()+".");
         return msg;
     }
-
 }

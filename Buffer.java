@@ -1,6 +1,3 @@
-package src;
-
-import src.Message;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;

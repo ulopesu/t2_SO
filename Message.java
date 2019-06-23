@@ -1,5 +1,3 @@
-package src;
-
 public class Message {
     private int priority;
     private String content;
